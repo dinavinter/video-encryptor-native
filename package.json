@@ -98,8 +98,7 @@
     "name": "Din Vinter",
     "email": "dina.vintr@gmail.com",
     "url": "https://github.com/dinavinter"
-  } ,
-
+  },
   "homepage": "https://github.com/dinavinter/video-encryptor-native#readme",
   "jest": {
     "testURL": "http://localhost/",
@@ -231,9 +230,11 @@
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",
+    "express-pouchdb": "^4.2.0",
     "file-saver": "^2.0.5",
     "history": "^5.0.0",
     "jszip": "^3.6.0",
+    "pouchdb-adapter-memory": "^7.2.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "latest",
@@ -241,8 +242,9 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.0",
     "regenerator-runtime": "^0.13.5",
+    "rxdb": "^9.20.0",
+    "rxdb-hooks": "latest",
     "source-map-support": "^0.5.19",
-    "typings-for-css-modules-loader": "^1.7.0",
     "zxcvbn": "latest"
   },
   "devEngines": {
@@ -277,5 +279,4 @@
       "next"
     ]
   }
-
 }

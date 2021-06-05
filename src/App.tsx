@@ -3,6 +3,8 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import icon from '../assets/icon.svg';
 import './App.global.css';
 import FileSelect from "./components/FileSelect";
+import FilesStoreProvider from "./db/store/StoreProvider";
+import Consumer from "./components/Gallery";
 
 const Hello = () => {
   return (
@@ -16,9 +18,10 @@ const Hello = () => {
              <span role="img" aria-label="books">
               📚
             </span>
-
-        <FileSelect/>
-
+        <FilesStoreProvider>
+          <FileSelect/>
+          <Consumer />
+        </FilesStoreProvider>
       </div>
     </div>
   );
@@ -29,6 +32,7 @@ export default function App() {
     <Router>
       <Switch>
         <Route path="/" component={Hello}/>
+        <Route path="/gallery" component={Hello}/>
       </Switch>
     </Router>
   );

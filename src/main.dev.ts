@@ -14,6 +14,7 @@ import path from 'path';
 import { app, BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import {serveOverHttp} from './db/database'
 import MenuBuilder from './menu';
 
 export default class AppUpdater {
@@ -123,10 +124,18 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.whenReady().then(createWindow).catch(console.log);
+// async function attachDb(){
+//   return serveOverHttp();
+// }
+
+app.whenReady()
+  // .then(attachDb)
+  .then(createWindow)
+  .catch(console.log);
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
 });
+

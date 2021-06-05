@@ -4,7 +4,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import { dependencies as externals } from '../../src/package.json';
+import {dependencies as externals} from '../../src/package.json';
 
 export default {
   externals: [...Object.keys(externals || {})],
@@ -21,6 +21,39 @@ export default {
           },
         },
       },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          },
+        },
+      },
+      {
+        test: /\.worker\.(c|m)?js$/i,
+        use: {
+          loader: "worker-loader",
+          options: {
+            esModule: false,
+          }
+        },
+      },
+      // {
+      //   test: /\.css$/i,
+      //   include: path.join(__dirname, 'src/components'),
+      //   use: [
+      //     'style-loader',
+      //     {
+      //       loader: 'typings-for-css-modules-loader',
+      //       options: {
+      //         modules: true,
+      //         namedExport: true
+      //       }
+      //     }
+      //   ]
+      // }
     ],
   },
 

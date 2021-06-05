@@ -58,3 +58,9 @@ a:hover {
   align-items: center;
   margin: 20px 0;
 }
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,6 +1,6 @@
-import React, {CSSProperties, useMemo} from 'react';
+import React, {CSSProperties, useEffect, useMemo} from 'react';
 import {useDropzone} from 'react-dropzone';
-
+import { useFileMutation} from '../db/store/fileMutations'
 const baseStyle:CSSProperties  = {
   flex: 1,
   display: 'flex',
@@ -35,9 +35,17 @@ function FileSelect( ) {
     getInputProps,
     isDragActive,
     isDragAccept,
-    isDragReject
+    isDragReject,
+    acceptedFiles
   } = useDropzone();
 
+  const {mutateAsync} = useFileMutation();
+  useEffect(()=>{
+    if(acceptedFiles)
+    {
+      acceptedFiles.forEach(mutateAsync);
+    }
+  },[acceptedFiles])
   const style = useMemo<CSSProperties>(() => ({
     ...baseStyle,
     ...(isDragActive ? activeStyle : {}),

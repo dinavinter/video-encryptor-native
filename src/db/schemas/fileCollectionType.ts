@@ -6,7 +6,7 @@ import {
 export type FileDocType = {
   name: string;
   size: number;
-  created: Date ;
+  created: string ;
 
 };
 

@@ -31,7 +31,7 @@ const fileSchema: RxJsonSchema<FileDocument> = {
       primary: true
     },
     size: {
-      type: 'string'
+      type: 'number'
     },
     created: {
       type: 'string'

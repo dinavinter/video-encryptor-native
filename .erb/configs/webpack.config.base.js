@@ -39,6 +39,12 @@ export default {
             esModule: false,
           }
         },
+      }, {
+        test: /\.html$/,
+        use: {
+          loader: "html-loader"
+
+        },
       },
       // {
       //   test: /\.css$/i,

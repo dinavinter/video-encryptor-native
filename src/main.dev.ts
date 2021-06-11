@@ -14,8 +14,13 @@ import path from 'path';
 import { app, BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import {serveOverHttp} from './db/database'
+import {serveOverHttp, createDb} from './db/database'
 import MenuBuilder from './menu';
+
+const { addRxPlugin } = require('rxdb');
+addRxPlugin(require('rxdb/plugins/server').RxDBServerPlugin);
+addRxPlugin(require('pouchdb-adapter-memory'));
+
 
 export default class AppUpdater {
   constructor() {
@@ -124,12 +129,27 @@ app.on('window-all-closed', () => {
   }
 });
 
-// async function attachDb(){
-//   return serveOverHttp();
-// }
+async function attachDb(){
+  const db = await createDb(
+    'memory'
+  );
+
+  /**
+   * spawn a server
+   * which is used as sync-goal by page.js
+   */
+  console.log('start server');
+  await db.server({
+    path: '/db',
+    port: 10102,
+    cors: true
+  });
+  console.log('started server');
+
+}
 
 app.whenReady()
-  // .then(attachDb)
+  .then(attachDb)
   .then(createWindow)
   .catch(console.log);
 

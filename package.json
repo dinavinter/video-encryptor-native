@@ -140,6 +140,7 @@
     "@babel/plugin-syntax-import-meta": "^7.10.4",
     "@babel/plugin-transform-react-constant-elements": "^7.12.1",
     "@babel/plugin-transform-react-inline-elements": "^7.12.1",
+    "@babel/plugin-transform-react-jsx": "^7.14.3",
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-react": "^7.12.7",
@@ -231,19 +232,25 @@
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",
     "express-pouchdb": "^4.2.0",
-    "file-saver": "^2.0.5",
+    "file-saver": "latest",
+    "formik": "latest",
     "history": "^5.0.0",
     "html-loader": "^2.1.2",
     "jszip": "^3.6.0",
+    "pouchdb-adapter-http": "latest",
+    "pouchdb-adapter-idb": "latest",
     "pouchdb-adapter-memory": "^7.2.2",
+    "pouchdb-adapter-websql": "latest",
+    "pouchdb-replication": "latest",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-dplayer": "^0.4.2",
     "react-dropzone": "latest",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.0",
     "regenerator-runtime": "^0.13.5",
-    "rxdb": "^9.20.0",
+    "rxdb": "latest",
     "rxdb-hooks": "latest",
     "rxjs": "^7.1.0",
     "source-map-support": "^0.5.19",
@@ -280,5 +287,10 @@
     "baseBranches": [
       "next"
     ]
+  },
+  "exports": {
+    "./jsx-runtime": "./jsx-runtime.js",
+    "./jsx-dev-runtime": "./jsx-dev-runtime.js",
+    "./": "./"
   }
 }

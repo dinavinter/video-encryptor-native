@@ -1,28 +1,26 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import icon from '../assets/icon.svg';
-import './App.global.css';
 import FileSelect from "./components/FileSelect";
 import FilesStoreProvider from "./db/store/StoreProvider";
-import Consumer from "./components/Gallery";
+import {Layout} from 'antd';
+
 
 const Hello = () => {
   return (
     <div>
-      <div className="Hello">
-        <img width="200px" alt="icon" src={icon}/>
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
+      <FilesStoreProvider>
+        {/*<PicturesWall/>*/}
+        <FileSelect />
+        {/*<Layout>*/}
+        {/*  <Header><FileSelect/> </Header>*/}
+        {/* </Layout>*/}
+        {/*    <Content>*/}
+        {/*      <Consumer/>*/}
+        {/*    </Content>*/}
 
-             <span role="img" aria-label="books">
-              📚
-            </span>
-        <FilesStoreProvider>
-          <FileSelect/>
-          <Consumer />
-        </FilesStoreProvider>
-      </div>
+        {/*  </Layout>*/}
+        {/*</Layout>*/}
+      </FilesStoreProvider>
     </div>
   );
 };

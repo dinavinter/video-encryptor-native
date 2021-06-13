@@ -32,6 +32,8 @@ import {RxAttachment} from "rxdb/dist/types/types/rx-attachment";
 import React, {ReactDOM} from "react";
 import {DPlayer} from 'react-dplayer'
 import {PouchWriteError} from "rxdb/src/types";
+import {encrypt, toZipBlob} from "../worker/handleFiles";
+import {zipFile} from "../worker/zipper";
 
 const fileSchema: RxJsonSchema<FileDocument> = {
   title: 'file schema',
@@ -102,19 +104,21 @@ async function putVideo(this: FileCollection, file: File): Promise<FileDocument>
 }
 
 
-async function putFile(this: FileCollection, file: File) {
+async function putFile1(this: FileCollection, file: File) {
   // you can now call this once and then do writes on the pouchdb
   this.watchForChanges();
+  const encrypted=await zipFile(file);
   const pouchDoc = {
     _id: file.name,
     created: Date.now().toString(),
     size: file.size,
     name: file.name,
     url: file.path,
+
     _attachments: {
       'blob': {
         content_type: file.type,
-        data: file
+        data: encrypted
       }
     },
 
@@ -128,6 +132,7 @@ async function putFile(this: FileCollection, file: File) {
       return await this.pouch.put(pouchDoc);
 
     }
+    throw err;
   });
   console.log("Pouch Put Response" + JSON.stringify(res, null, 2))
   const response= await this.pouch.get(pouchDoc._id);
@@ -142,6 +147,40 @@ async function putFile(this: FileCollection, file: File) {
   //
   // await doc.save();
   // return doc;
+}
+async function putFile(this: FileCollection, file: File) {
+  // you can now call this once and then do writes on the pouchdb
+  this.watchForChanges();
+  const pouchDoc = {
+    _id: file.name,
+    created: Date.now().toString(),
+    size: file.size,
+    name: file.name,
+    status: 'uploading'
+
+
+  };
+// now write sth on the pouchdb
+
+  const res = await this._pouchPut(pouchDoc, true) ;
+  console.log("Pouch Put Response" + JSON.stringify(res, null, 2))
+  const response= await this._pouchGet(pouchDoc._id);
+  console.log("Pouch Get Response" + JSON.stringify(response, null, 2))
+
+  const {_rev}= await this.pouch.putAttachment(pouchDoc._id ,'blob', response?._rev , file, file.type)
+
+  zipFile(file).then(async path=>{
+     pouchDoc.status ='done';
+     pouchDoc.url= path;
+     pouchDoc._rev= _rev;
+     await this.pouch.put(
+       pouchDoc
+     )
+   }).catch((e) => {
+      console.log(e)
+   });
+
+  ;
 }
 
 function getBlob(this: FileCollection, file: FileDocument): any {
